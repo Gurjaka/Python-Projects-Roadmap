@@ -1,4 +1,4 @@
-# 100 Python Projects Roadmap
+# Python Projects Roadmap
 
 ## Beginner Projects (Estimated Time: 10 Days)
 
