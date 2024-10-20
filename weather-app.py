@@ -11,34 +11,36 @@ simplejson==3.19.2
 urllib3==2.2.2
 """
 
-import requests, shutil, os, sys
+import sys
+import os
+import shutil
+import requests
 
-class utils:
+class Utils:
     def clear(self):
         os.system('cls' if os.name == 'nt' else 'clear')
-    
+
     def term(self,n):
         width, height = shutil.get_terminal_size()
         if n == 'width':
             return width
-        elif n == 'height':
+        if n == 'height':
             return height
-        else:
-            return False
+        return False
 
     def txt(self,text):
         top, side, width = self.border()
 
         # Calculate padding
         text_length = len(text)
-        total_padding = (width - text_length - 2)
+        total_padding = width - text_length - 2
         left_padding = total_padding // 2
         right_padding = total_padding - left_padding
-        
+
         middle = f'|{" " * left_padding}{text}{" " * right_padding}|'
         if len(middle) < width:
             middle += ' ' * (width - len(middle))
-        
+
         return middle
 
     def border(self):
@@ -47,8 +49,8 @@ class utils:
         side = f'|{" " * (width - 2)}|'
 
         return top, side, width
-    
-    def borderText(self,text):
+
+    def border_text(self,text):
         top, side, width = self.border()
         print(f'\n{top}\n{side}\n{self.txt(text)}\n{side}\n{top}')
 
@@ -56,17 +58,16 @@ class utils:
         top, side, width = self.border()
 
         text_length = len(text)
-        total_padding = (width - text_length - 2)
+        total_padding = width - text_length - 2
         left_padding = total_padding // 2
         opt = input(f'{" " * left_padding}{text} ')
 
         return opt
 
-class design:
+class Design:
     def welcome(self):
         # Welcome box on top
         top, side, width = u.border()
-        
         print(f'\n{top}\n{side}\n{u.txt('Weather CLI')}\n{side}\n{top}')
 
     def greet(self):
@@ -80,11 +81,13 @@ class design:
         self.welcome()
 
         top, side, width = u.border()
+        bstart = f'{top}\n{side}\n'
+        bend = f'{side}\n{top}\n'
 
-        print(f'{top}\n{side}\n{u.txt('1) Location')}\n{u.txt('2) Support')}\n{u.txt('3) About us')}\n{u.txt('4) FAQ')}\n{u.txt('5) Buy me a coffee')}\n{u.txt('6) Quit')}\n{side}\n{top}')
+        print(f'{bstart}\n{u.txt('1) Location')}\n{u.txt('2) Support')}\n{u.txt('3) About us')}')
+        print(f'{u.txt('4) FAQ')}\n{u.txt('5) Buy me a coffee')}\n{u.txt('6) Quit')}\n{bend}')
 
         opt = u.padding('Choose operation: ')
-        
         return opt
 
     def city(self):
@@ -92,20 +95,17 @@ class design:
         Simple city selection menu.
         '''
         u.clear()
-        top, side, width = u.border()
-        
+
         # First Screen
-        u.borderText(' Location: ')
+        u.border_text(' Location: ')
         city = u.padding('  City: ')
 
         u.clear()
-        
         # Create the content string and calculate padding
-        u.borderText(f'  City: {city}')
-        
+        u.border_text(f'  City: {city}')
         return city
 
-class options:
+class Options:
     def support(self):
         '''
         Support page.
@@ -115,26 +115,32 @@ class options:
         top, side, width, = u.border()
         u.clear()
 
-        print(f'\n{top}\n{side}\n{u.txt('Welcome to the support section.')}\n{u.txt('How can we assist you today?')}\n{side}\n{top}')
-        
-        print(f'{top}\n{side}\n{u.txt('1) The weather app is not accurate or not working')}\n{u.txt('2) Other Bugs')}\n{u.txt('3) Suggest other improvements')}\n{u.txt('4) Previous menu')}{u.txt('5) Quit')}\n{side}\n{top}')
+        print(f'\n{top}\n{side}\n{u.txt('Welcome to the support section.')}')
+        print(f'{u.txt('How can we assist you today?')}\n{side}\n{top}')
+
+        print(f'{top}\n{side}\n{u.txt('1) The weather app is not accurate or not working')}')
+        print(f'{u.txt('2) Other Bugs')}\n{u.txt('3) Suggest other improvements')}')
+        print(f'{u.txt('4) Previous menu')}{u.txt('5) Quit')}\n{side}\n{top}')
 
         opt = u.padding('Choose operation: ')
 
         match opt:
             case '1':
                 u.clear()
-                u.borderText("If there are any issues with the weather app or it's accuracy, open issue request on our github.")
+                u.border_text("Is there are any issues with the weather app or it's accuracy?")
+                u.border_text("Open issue request on our github.")
                 u.padding('Type anything to exit: ')
 
             case '2':
                 u.clear()
-                u.borderText("If there are any bugs you want to report, open issue/pull request on our github.")    
+                u.border_text("Are there are any bugs that you want to report?")
+                u.border_text("open issue/pull request on our github.")
                 u.padding('Type anything to exit: ')
 
             case '3':
                 u.clear()
-                u.borderText("If there is anything you want to suggest us, make a pull request on our github.")
+                u.border_text("Is there is anything you want to suggest us?")
+                u.border_text("make a pull request on our github.")
                 u.padding('Type anything to exit: ')
 
     def aboutus(self):
@@ -143,8 +149,11 @@ class options:
         '''
         top, side, width = u.border()
         u.clear()
+        b1 = f'\n{top}\n{side}\n'
+        b2 = f'\n{side}\n{top}'
 
-        print(f'\n{top}\n{side}\n{u.txt("This is a small testing project of weather app inside a terminal.")}\n{u.txt('This is app is still in beta, and you may encounter some bugs.')}\n{side}\n{top}')
+        print(f'{b1}{u.txt("This is a small testing project of weather app inside a terminal.")}')
+        print(f'{u.txt('This is app is still in beta, and you may encounter some bugs.')}{b2}')
 
         u.padding('type anything to exit: ')
 
@@ -204,90 +213,89 @@ class options:
         Buy coffee page.
         '''
         u.clear()
-        u.borderText("If you enjoy using this program, consider supporting us at buymeacoffe.com/NiGu")
+        u.border_text("If you enjoy using this program, consider supporting us at buymeacoffe.com/NiGu")
         u.padding('Type anything to exit: ')
 
-class api:
-    def get_weather(self,city):
-        '''
-        Fetch city info from API.
-        
-        Get data from API and display according to users choice.
-        '''
-        # Define url and API
-        key = '' # Your API goes here
-        url = f"http://api.weatherapi.com/v1/current.json?key={key}&q={city}"
-        
-        # Define get function
-        response = requests.get(url)
-        data = response.json()
-        
-        while True:
-            # Terminal Menu
-            print()
-            top, side, width = u.border()
+def get_weather(city):
+    '''
+    Fetch city info from API.
+    
+    Get data from API and display according to users choice.
+    '''
+    # Define url and API
+    key = 'f6f227bea0c24040978115410242407' # Your API goes here
+    url = f"http://api.weatherapi.com/v1/current.json?key={key}&q={city}"
 
-            print(f'{top}\n{side}\n{u.txt('Option Menu:')}\n{side}\n{u.txt('1) Location')}\n{u.txt('2) Condition')}\n{u.txt('3) All info')}\n{u.txt('4) Previous menu')}\n{u.txt('5) Quit')}\n{side}\n{top}')
-            
-            opt = u.padding('Choose option:')
-            
-            match opt:
-                case '1':
-                    u.clear()
-                    top, side, width = u.border()
+    # Define get function
+    response = requests.get(url, timeout=10)
+    data = response.json()
 
-                    d.welcome()
+    while True:
+        # Terminal Menu
+        print()
+        top, side, width = u.border()
 
-                    print(f'{top}\n{side}')
-                    for key, value in data['location'].items():
-                        if key == 'name':
-                            print(u.txt(value))
-                        print(u.txt(f'{key}: {value}'))
-                    print(f'{side}\n{top}')
-                    
-                case '2':
-                    u.clear()
-                    d.welcome()
+        print(f'{top}\n{side}\n{u.txt('Option Menu:')}\n{side}')
+        print(f'{u.txt('1) Location')}\n{u.txt('2) Condition')}')
+        print(f'{u.txt('3) All info')}\n{u.txt('4) Previous menu')}')
+        print(f'{u.txt('5) Quit')}\n{side}\n{top}')
 
-                    print(f'{top}\n{side}')
-                    for key, value in data['current'].items():
-                        if key == 'pressure_mb':
-                            break
-                        print(u.txt(f'{key}: {value}'))
-                    print(f'{side}\n{top}')
-                
-                case '3':
-                    u.clear()
-                    d.welcome()
+        opt = u.padding('Choose option:')
+        match opt:
+            case '1':
+                u.clear()
+                top, side, width = u.border()
 
-                    print(f'{top}\n{side}')
-                    print(f'{u.txt('Location: ')}\n{side}')
+                d.welcome()
 
-                    for key, value in data['location'].items():
-                        if key == 'name':
-                            print(u.txt(value))
-                        print(u.txt(f'{key}: {value}'))
-                    
-                    print(f'{side}\n{u.txt('Condition: ')}\n{side}')
-                    for key, value in data['current'].items():
-                        if key == 'pressure_mb':
-                            break
-                        print(u.txt(f'{key}: {value}'))
+                print(f'{top}\n{side}')
+                for key, value in data['location'].items():
+                    if key == 'name':
+                        print(u.txt(value))
+                    print(u.txt(f'{key}: {value}'))
+                print(f'{side}\n{top}')
 
-                    print(f'{side}\n{top}')
-                
-                case '4':
-                    break
-            
-                case '5':
-                    sys.exit()
-            
-        return data
+            case '2':
+                u.clear()
+                d.welcome()
 
-u = utils()
-d = design()
-o = options()
-a = api()
+                print(f'{top}\n{side}')
+                for key, value in data['current'].items():
+                    if key == 'pressure_mb':
+                        break
+                    print(u.txt(f'{key}: {value}'))
+                print(f'{side}\n{top}')
+
+            case '3':
+                u.clear()
+                d.welcome()
+
+                print(f'{top}\n{side}')
+                print(f'{u.txt('Location: ')}\n{side}')
+
+                for key, value in data['location'].items():
+                    if key == 'name':
+                        print(u.txt(value))
+                    print(u.txt(f'{key}: {value}'))
+
+                print(f'{side}\n{u.txt('Condition: ')}\n{side}')
+                for key, value in data['current'].items():
+                    if key == 'pressure_mb':
+                        break
+                    print(u.txt(f'{key}: {value}'))
+
+                print(f'{side}\n{top}')
+
+            case '4':
+                break
+
+            case '5':
+                sys.exit()
+    return data
+
+u = Utils()
+d = Design()
+o = Options()
 
 # clear the console screen
 u.clear()
@@ -299,7 +307,7 @@ while True:
     match d.greet():
         case '1':
             # option 1: Get weather information for a city
-            a.get_weather(d.city())
+            get_weather(d.city())
 
         case '2':
             # option 2: Display support information

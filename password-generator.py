@@ -9,15 +9,15 @@ while True:
     pass_str = input("Choose the password level, Low, Medium, or High : ")
     pass_str = pass_str.lower()
     match pass_str:
-      case "low":
-        charset = set1
-      case "medium":
-        charset = set1 + set2
-      case "high":
-        charset = set1 + set2 + set3
-      case _:
-        print("Incorrect option!!!")
-        continue
+        case "low":
+            charset = set1
+        case "medium":
+            charset = set1 + set2
+        case "high":
+            charset = set1 + set2 + set3
+        case _:
+            print("Incorrect option!!!")
+            continue
     break
 
 while True:

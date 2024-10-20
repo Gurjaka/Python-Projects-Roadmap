@@ -1,49 +1,57 @@
-import random, time, os
+import random
+import time
+import os
+
+winning_conditions = {
+    'Rock': 'Scissors',
+    'Paper': 'Rock',
+    'Scissors': 'Paper'
+}
+choice_list = ['Rock', 'Paper', 'Scissors']
 
 while True:
-  os.system('cls' if os.name == 'nt' else 'clear')
+    os.system('cls' if os.name == 'nt' else 'clear')
+    print('Let\'s play a Rock, Paper, Scissors game!!!')
+    choice = random.choice(choice_list)
 
-  choice_list = ['Rock', 'Paper', 'Scissors']
-  print('Lets play a Rock, Paper, Scissors game!!!')
-  choice = random.choice(choice_list)
+    print('________________')
+    for i, j in enumerate(choice_list):
+        print(f'{i + 1}) {j}')
+    print('----------------')
 
-  print('________________')
-  for i in range(0,len(choice_list)):
-    print(f'{i+1}) {choice_list[i]}')
-  print('----------------')
-  
-  player = input('--> ')
-  while True:
-    try:
-      player = int(player)
-      if player > 3 or player < 0:
-        raise ValueError
-      else:
-        break
-    except ValueError:
-      print('Invalid input! Must be a number 1-3!')
-  player = choice_list[player-1]
+    player = input('--> ')
+    while True:
+        try:
+            player = int(player)
+            if player > 3 or player < 1:
+                raise ValueError
+            break
+        except ValueError:
+            print('Invalid input! Must be a number 1-3!')
+            player = input('--> ')
 
-  print('Rock...')
-  time.sleep(1)
+    player = choice_list[player - 1]
 
-  print('Paper...')
-  time.sleep(1)
+    print('Rock...')
+    time.sleep(1)
 
-  print('Scissors...')
-  time.sleep(1)
+    print('Paper...')
+    time.sleep(1)
 
-  print('SHOOT!!!')
-  print(f'You: {player} vs Bot: {choice}')
+    print('Scissors...')
+    time.sleep(1)
 
-  if player == 'Rock' and choice == 'Scissors' or player == 'Paper' and choice == 'Rock' or player == 'Scissors' and choice == 'Paper':
-    print('You win!')
-  elif player == choice:
-    print("It's tie!")
-  else:
-    print('You lose!')
-  replay = input('Do you wish to play again?(y/n): ')
-  if replay == 'y':
-    continue
-  else:
+    print('SHOOT!!!')
+    print(f'You: {player} vs Bot: {choice}')
+
+    if choice == winning_conditions[player]:
+        print('You win!')
+    elif player == choice:
+        print("It's a tie!")
+    else:
+        print('You lose!')
+
+    replay = input('Do you wish to play again? (y/n): ')
+    if replay.lower() == 'y':
+        continue
     break

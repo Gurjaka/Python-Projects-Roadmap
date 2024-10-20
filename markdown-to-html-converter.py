@@ -16,9 +16,8 @@ if method == 1:
         text = input('Type your line (QUIT! to exit): ')
         if text == 'QUIT!':
             break
-        else:
-            html.append(markdown.markdown(text))
-            continue
+        html.append(markdown.markdown(text))
+        continue
     for i in html:
         print(i)
 

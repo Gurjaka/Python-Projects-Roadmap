@@ -1,6 +1,7 @@
 word = input('Your word: ')
 
 if word == word[::-1]:
-  print(True)
+    print(True)
 else:
-  print(False)
+    print(False)
+
