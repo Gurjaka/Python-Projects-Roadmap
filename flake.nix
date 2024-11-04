@@ -23,6 +23,7 @@
         py.simplejson
         py.flask
         py.playsound
+        py.beautifulsoup4
       ];
       
       shellHook = ''
